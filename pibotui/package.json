@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.2",
     "react-scripts": "5.0.1",
+    "react-tabulator": "^0.18.1",
     "tabulator-tables": "^5.4.4",
     "web-vitals": "^2.1.4"
   },

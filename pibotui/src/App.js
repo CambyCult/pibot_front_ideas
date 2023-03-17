@@ -1,6 +1,9 @@
 import Register from './Register';
 import Field from './Field';
+import './field.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+
 
 function App() {
 
@@ -15,10 +18,10 @@ function App() {
         </BrowserRouter>
         
         <div className="header">
-          <button class="button-1" onclick="openNav()">SB</button>
-          <div class="button-2"></div>
-          <div class="button-3"></div>
-          <div class="button-4"></div>
+          <button className="button-1" onClick="openNav()">SB</button>
+          <div className="button-2"></div>
+          <div className="button-3"></div>
+          <div className="button-4"></div>
         </div>
       
     </main>

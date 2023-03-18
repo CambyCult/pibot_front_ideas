@@ -19,12 +19,25 @@
   
   
   .container {
-    position:fixed;
+    /* position:fixed; */
     top:0;
     left:0;
-    height:90vh;
+    height:60vh;
     width:100vw;
     background-color:rgb(83, 37, 126);
+  }
+  .container2 {
+    /* position:fixed; */
+    height:100vh;
+    width:100vw;
+    background-color:rgb(83, 37, 126);
+  }
+
+  form {
+    width: 45vw;
+    margin: auto;
+    background: #fff;
+    color: #444;
   }
   
   

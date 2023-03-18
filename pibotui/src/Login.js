@@ -14,7 +14,7 @@ export function Login() {
         ] = `Bearer ${response.data.jwt}`;
         localStorage.setItem("jwt", response.data.jwt);
         event.target.reset();
-        response.data.user_id === true
+        response.data.user_admin === true
           ? (window.location.href = "/supervisor")
           : (window.location.href = "/field");
       })

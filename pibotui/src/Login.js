@@ -2,6 +2,7 @@ import axios from "axios";
 
 export function Login() {
   const handleSubmit = (event) => {
+    //overrides the submit button normal behavior in the form
     event.preventDefault();
     const params = new FormData(event.target);
 

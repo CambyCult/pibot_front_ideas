@@ -9,14 +9,15 @@ export function SupervisorView() {
   // MESSAGES
   const handleMessages = () => {
     axios.get("http://localhost:3000/messages.json").then((response) => {
-      console.log(response.data);
-      // setIsMessagesVisible(true);
+      // console.log(response.data);
       setMessages(response.data);
     });
   };
 
+  // renders messages on page load
   useEffect(handleMessages, []);
 
+  //toggles messages to be visible or not
   const handleVisibleMessages = () => {
     setIsMessagesVisible(!isMessagesVisible);
   };
@@ -27,13 +28,15 @@ export function SupervisorView() {
 
   const retrieveUsers = () => {
     axios.get("http://localhost:3000/users.json").then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       setUsers(response.data);
     });
   };
 
+  // renders users on page load
   useEffect(retrieveUsers, []);
 
+  //creates an array of objects for each user and some of their attributes. This info is used in the form for assigning users to rigs.
   const usersInfo = users.map((user) => {
     const container = {};
     container.id = user.id;
@@ -47,6 +50,7 @@ export function SupervisorView() {
 
   const [selectUser, setSelectUser] = useState("");
 
+  //retrieves user_id for user clicked in form below to dynamically send patch request to that user on the backend
   const selectedUser = (event) => {
     const selected = event.target.value;
     setSelectUser(event.target.value);

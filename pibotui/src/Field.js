@@ -56,11 +56,13 @@ function Field() {
   };
 
   // Find Rig User is On
+  const [username, setUsername] = useState("");
   const handleRig = () => {
     axios
       .get(`http://localhost:3000/users/${decoded.user_id}.json`)
       .then((response) => {
         localStorage.setItem("rig", response.data.rig_id);
+        setUsername(response.data.first_name);
       });
   };
 
@@ -80,6 +82,7 @@ function Field() {
 
   return (
     <div className="App">
+      <h4>Welcome, {username}</h4>
       <header className="App-header">
         <div className="container">
           <ReactTabulator
@@ -95,7 +98,7 @@ function Field() {
         </div>
         <div className="container2">
           <button type="button" onClick={handleChecklist}>
-            Load Rig Checklist
+            Load Rig {userRig} Checklist
           </button>
           <button type="button" onClick={handleMessages}>
             Send A Message

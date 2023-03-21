@@ -76,6 +76,11 @@ const Register = () => {
     setSuccess(true);
   };
 
+  const onLogin = () => {
+    localStorage.removeItem("mordor");
+    localStorage.removeItem("jwt");
+  };
+
   return (
     <section>
       <p
@@ -203,7 +208,9 @@ const Register = () => {
         <br />
         <span className="line">
           {/*put router link here*/}
-          <Link to="/login">Sign In</Link>
+          <Link to="/login" onClick={onLogin}>
+            Sign In
+          </Link>
         </span>
       </p>
     </section>

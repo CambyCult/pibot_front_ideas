@@ -55,6 +55,29 @@ function Field() {
       });
   };
 
+  // Find Rig User is On
+  const handleRig = () => {
+    axios
+      .get(`http://localhost:3000/users/${decoded.user_id}.json`)
+      .then((response) => {
+        localStorage.setItem("rig", response.data.rig_id);
+      });
+  };
+
+  useEffect(handleRig);
+
+  const userRig = localStorage.getItem("rig");
+
+  const [checklist, setChecklist] = useState("");
+  const handleChecklist = () => {
+    setChecklist("");
+    axios
+      .get(`http://localhost:3000/checklists/${userRig}.json`)
+      .then((response) => {
+        console.log(response.data);
+      });
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -71,6 +94,9 @@ function Field() {
           />
         </div>
         <div className="container2">
+          <button type="button" onClick={handleChecklist}>
+            Load Rig Checklist
+          </button>
           <button type="button" onClick={handleMessages}>
             Send A Message
           </button>

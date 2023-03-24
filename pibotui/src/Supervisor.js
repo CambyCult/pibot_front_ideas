@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import jwt_decode from "jwt-decode";
 
 export function SupervisorView() {
   const [messages, setMessages] = useState([]);
@@ -49,10 +48,14 @@ export function SupervisorView() {
   // Placing User on Rig
 
   const [selectUser, setSelectUser] = useState("");
+  const [isUsersVisible, setIsUsersVisible] = useState(false);
+
+  const handleTechs = () => {
+    setIsUsersVisible(!isUsersVisible);
+  };
 
   //retrieves user_id for user clicked in form below to dynamically send patch request to that user on the backend
   const selectedUser = (event) => {
-    const selected = event.target.value;
     setSelectUser(event.target.value);
   };
 
@@ -65,6 +68,7 @@ export function SupervisorView() {
       .patch(`http://localhost:3000/users/${selectUser}.json`, params)
       .then((response) => {
         console.log(response.data);
+        setIsUsersVisible(false);
       })
       .catch((error) => {
         console.log(error.response.data.errors);
@@ -98,26 +102,34 @@ export function SupervisorView() {
           ))}
         </div>
       )}
-      <form onSubmit={handleFieldAssign}>
-        <label>Tech:</label>
-        <select id="id" name="id" size="8">
-          {usersInfo.map((container) => (
-            <option value={container.id} onClick={selectedUser}>
-              {container.firstName}
-            </option>
-          ))}
-        </select>
-        <label>Rig:</label>
-        <select id="rig_id" name="rig_id" size="6">
-          <option value="1">Rig 1</option>
-          <option value="2">Rig 2</option>
-          <option value="3">Rig 3</option>
-          <option value="4">Rig 4</option>
-          <option value="5">Rig 5</option>
-          <option value="6">Rig 6</option>
-        </select>
-        <button type="submit">Submit</button>
-      </form>
+      <div></div>
+      <button type="button" onClick={handleTechs}>
+        Assign Techs
+      </button>
+      {isUsersVisible ? (
+        <form onSubmit={handleFieldAssign}>
+          <label>Tech:</label>
+          <select id="id" name="id" size="8">
+            {usersInfo.map((container) => (
+              <option value={container.id} onClick={selectedUser}>
+                {container.firstName}
+              </option>
+            ))}
+          </select>
+          <label>Rig:</label>
+          <select id="rig_id" name="rig_id" size="6">
+            <option value="1">Rig 1</option>
+            <option value="2">Rig 2</option>
+            <option value="3">Rig 3</option>
+            <option value="4">Rig 4</option>
+            <option value="5">Rig 5</option>
+            <option value="6">Rig 6</option>
+          </select>
+          <button type="submit">Submit</button>
+        </form>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }

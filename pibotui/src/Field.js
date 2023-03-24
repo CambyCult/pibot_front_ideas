@@ -6,28 +6,14 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 function Field() {
-  const columns = [
-    { title: "Item", field: "item", width: 300, responsive: 0 },
-    { title: "Size", field: "size", widthGrow: 1, responsive: 0 },
-    { title: "Stock", field: "stock", widthGrow: 1, responsive: 0 },
-    { title: "reqStock", field: "reqStock", widthGrow: 1, responsive: 1 },
-  ];
-  var data = [
-    { id: 1, item: "Nasal Cannula", size: "Adult", stock: 1, reqStock: 4 },
-    { id: 2, item: "Nasal Cannula", size: "Pedi", stock: 3, reqStock: 4 },
-    { id: 3, item: "Bandaids", size: 4, stock: 7, reqStock: 12 },
-    { id: 4, item: "Whole-Blood", size: "O-", stock: 3, reqStock: 9 },
-  ];
-
   const jwt = localStorage.getItem("jwt");
+
+  // for extracting user_id
   const decoded = jwt_decode(jwt);
 
-  // console.log(decoded.user_id);
-
-  //Message Handling
-  // const currentDateTime = new Date().toLocaleString();
-  // console.log(currentDateTime);
   var date = new Date();
+
+  // Modifies date format to be compatible with Message form date input field
   var currentDateTime = new Date(
     date.getTime() - date.getTimezoneOffset() * 60000
   )
@@ -36,12 +22,13 @@ function Field() {
     .split("T")
     .join("T");
 
-  // console.log(currentDateTime);
+  //toggles Message draft area
   const [isInputVisible, setIsInputVisible] = useState(false);
   const handleMessages = () => {
     setIsInputVisible(!isInputVisible);
   };
 
+  //Submits data for Message
   const handleSubmit = (event) => {
     event.preventDefault();
     const params = new FormData(event.target);
@@ -49,6 +36,8 @@ function Field() {
       .post("http://localhost:3000/messages.json", params)
       .then((response) => {
         console.log(response.data);
+        event.target.reset();
+        setIsInputVisible(false);
       })
       .catch((error) => {
         console.log(error.response);
@@ -70,6 +59,7 @@ function Field() {
 
   const userRig = localStorage.getItem("rig");
 
+  // Retrieving checklist for this Rig/User
   const [checklist, setChecklist] = useState("");
   const handleChecklist = () => {
     setChecklist("");
@@ -77,8 +67,24 @@ function Field() {
       .get(`http://localhost:3000/checklists/${userRig}.json`)
       .then((response) => {
         console.log(response.data);
+        setChecklist(response.data);
       });
   };
+
+  //Tabulator
+  const columns = [
+    { title: "Item", field: "item", width: 300, responsive: 0 },
+    { title: "Size", field: "size", widthGrow: 1, responsive: 0 },
+    { title: "Stock", field: "stock", widthGrow: 1, responsive: 0 },
+    { title: "reqStock", field: "reqStock", widthGrow: 1, responsive: 1 },
+  ];
+
+  var data = [
+    { id: 1, item: "Nasal Cannula", size: "Adult", stock: 1, reqStock: 4 },
+    { id: 2, item: "Nasal Cannula", size: "Pedi", stock: 3, reqStock: 4 },
+    { id: 3, item: "Bandaids", size: 4, stock: 7, reqStock: 12 },
+    { id: 4, item: "Whole-Blood", size: "O-", stock: 3, reqStock: 9 },
+  ];
 
   return (
     <div className="App">
@@ -110,12 +116,10 @@ function Field() {
                 name="user_id"
                 defaultValue={decoded.user_id}
               ></input>
-              {/* <label>date</label> */}
               <input
                 type="hidden"
                 name="date"
                 defaultValue={currentDateTime}
-                // placeholder={currentDateTime}
               ></input>
               <div>Shift:</div>
 

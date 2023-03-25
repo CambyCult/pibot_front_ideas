@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import "react-tabulator/css/tabulator.css";
 import { ReactTabulator } from "react-tabulator";
 import "./field.css";
@@ -80,6 +80,7 @@ function Field() {
       title: "Is Done",
       field: "is_done",
       editor: "tickCross",
+      editable: true,
       editorParams: {
         trueValue: "yes",
         falseValue: "no",
@@ -92,7 +93,7 @@ function Field() {
       responsive: 0,
     },
     {
-      title: "Min_Stock",
+      title: "Min. Stock",
       field: "min_stock",
       editor: "number",
       editorParams: {
@@ -119,7 +120,7 @@ function Field() {
     {
       id: 2,
       item: `${Object.keys(checklist)[4]}`,
-      size: "Pedi",
+      is_done: null,
       // stock: 3,
       min_stock: `${checklist.cones_min}`,
     },

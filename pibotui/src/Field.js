@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import "react-tabulator/css/tabulator.css";
 import { ReactTabulator } from "react-tabulator";
 import "./field.css";
@@ -60,28 +60,69 @@ function Field() {
   const userRig = localStorage.getItem("rig");
 
   // Retrieving checklist for this Rig/User
-  const [checklist, setChecklist] = useState("");
+
+  const [checklist, setChecklist] = useState({});
   const handleChecklist = () => {
     setChecklist("");
     axios
       .get(`http://localhost:3000/checklists/${userRig}.json`)
       .then((response) => {
         console.log(response.data);
-        setChecklist(response.data);
+        setChecklist({ ...response.data });
       });
   };
+  useEffect(handleChecklist, []);
 
   //Tabulator
   const columns = [
     { title: "Item", field: "item", width: 300, responsive: 0 },
-    { title: "Size", field: "size", widthGrow: 1, responsive: 0 },
-    { title: "Stock", field: "stock", widthGrow: 1, responsive: 0 },
-    { title: "reqStock", field: "reqStock", widthGrow: 1, responsive: 1 },
+    {
+      title: "Is Done",
+      field: "is_done",
+      editor: "tickCross",
+      editorParams: {
+        trueValue: "yes",
+        falseValue: "no",
+        tristate: false,
+        elementAttributes: {
+          maxlength: "10", //set the maximum character length of the input element to 10 characters
+        },
+      },
+      widthGrow: 1,
+      responsive: 0,
+    },
+    {
+      title: "Min_Stock",
+      field: "min_stock",
+      editor: "number",
+      editorParams: {
+        min: 0,
+        max: 20,
+        elementAttributes: {
+          maxlength: "20",
+        },
+      },
+      widthGrow: 1,
+      responsive: 0,
+    },
+    // { title: "reqStock", field: "reqStock", widthGrow: 1, responsive: 1 },
   ];
 
   var data = [
-    { id: 1, item: "Nasal Cannula", size: "Adult", stock: 1, reqStock: 4 },
-    { id: 2, item: "Nasal Cannula", size: "Pedi", stock: 3, reqStock: 4 },
+    {
+      id: 1,
+      item: `${Object.keys(checklist)[2]}`,
+      is_done: `${checklist.exterior_clean}`,
+      // stock: 2,
+      // reqStock: 4,
+    },
+    {
+      id: 2,
+      item: `${Object.keys(checklist)[4]}`,
+      size: "Pedi",
+      // stock: 3,
+      min_stock: `${checklist.cones_min}`,
+    },
     { id: 3, item: "Bandaids", size: 4, stock: 7, reqStock: 12 },
     { id: 4, item: "Whole-Blood", size: "O-", stock: 3, reqStock: 9 },
   ];
@@ -103,6 +144,10 @@ function Field() {
           />
         </div>
         <div className="container2">
+          <h3>
+            {Object.keys(checklist)[2]}:
+            {JSON.stringify(checklist.exterior_clean)}
+          </h3>
           <button type="button" onClick={handleChecklist}>
             Load Rig {userRig} Checklist
           </button>

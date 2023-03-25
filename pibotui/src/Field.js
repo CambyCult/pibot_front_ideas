@@ -145,10 +145,6 @@ function Field() {
           />
         </div>
         <div className="container2">
-          <h3>
-            {Object.keys(checklist)[2]}:
-            {JSON.stringify(checklist.exterior_clean)}
-          </h3>
           <button type="button" onClick={handleChecklist}>
             Load Rig {userRig} Checklist
           </button>

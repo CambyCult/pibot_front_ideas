@@ -44,6 +44,7 @@ export function SupervisorView() {
 
     return container;
   });
+  // console.log(usersInfo);
 
   // Placing User on Rig
 
@@ -96,7 +97,9 @@ export function SupervisorView() {
             <div key={message.id}>
               <h3>date: {message.date}</h3>
               <h4>shift: {message.shift}</h4>
-              <h4>field tech: {message.user_id}</h4>
+              <h4>
+                field tech: {message.user_first} {message.user_last}{" "}
+              </h4>
               <h5>message: {message.content}</h5>
             </div>
           ))}

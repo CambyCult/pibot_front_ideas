@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import "./Supervisor.css";
 
 export function SupervisorView() {
   const [messages, setMessages] = useState([]);
@@ -41,10 +42,20 @@ export function SupervisorView() {
     container.id = user.id;
     container.firstName = user.first_name;
     container.lastName = user.last_name;
-
+    container.rigId = user.rig_id;
     return container;
   });
   // console.log(usersInfo);
+
+  // Acquire Rigs
+  const [rigs, setRigs] = useState([]);
+  const handleRigs = () => {
+    axios.get("http://localhost:3000/rigs.json").then((response) => {
+      console.log(response.data);
+      setRigs(response.data);
+    });
+  };
+  useEffect(handleRigs, []);
 
   // Placing User on Rig
 
@@ -75,7 +86,7 @@ export function SupervisorView() {
         console.log(error.response.data.errors);
       });
   };
-
+  console.log();
   return (
     <div>
       <h2>Welcome to the supervisor portal.</h2>
@@ -110,26 +121,53 @@ export function SupervisorView() {
         Assign Techs
       </button>
       {isUsersVisible ? (
-        <form onSubmit={handleFieldAssign}>
-          <label>Tech:</label>
-          <select id="id" name="id" size="8">
-            {usersInfo.map((container) => (
-              <option value={container.id} onClick={selectedUser}>
-                {container.firstName}
-              </option>
-            ))}
-          </select>
-          <label>Rig:</label>
-          <select id="rig_id" name="rig_id" size="6">
-            <option value="1">Rig 1</option>
-            <option value="2">Rig 2</option>
-            <option value="3">Rig 3</option>
-            <option value="4">Rig 4</option>
-            <option value="5">Rig 5</option>
-            <option value="6">Rig 6</option>
-          </select>
-          <button type="submit">Submit</button>
-        </form>
+        <div className="flexTechs">
+          <form onSubmit={handleFieldAssign}>
+            <label>Tech:</label>
+            <select id="id" name="id" size="8">
+              {usersInfo.map((container) => (
+                <option value={container.id} onClick={selectedUser}>
+                  {container.firstName}
+                </option>
+              ))}
+            </select>
+            <label>Rig:</label>
+            <select id="rig_id" name="rig_id" size="6">
+              <option value="1">Rig 1</option>
+              <option value="2">Rig 2</option>
+              <option value="3">Rig 3</option>
+              <option value="4">Rig 4</option>
+              <option value="5">Rig 5</option>
+              <option value="6">Rig 6</option>
+            </select>
+            <button type="submit">Submit</button>
+          </form>
+          <div className="assignments-container">
+            <h3>Current Assignments</h3>
+            <table className="assignments-table">
+              <thead>
+                <tr>
+                  <th>Rig</th>
+                  <th>Tech 1</th>
+                  <th>Tech 2</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rigs.map((rig) => (
+                  <tr>
+                    <td>{rig.id}</td>
+                    <td>
+                      {rig.users.length >= 1 ? rig.users[0].first_name : ""}
+                    </td>
+                    <td>
+                      {rig.users.length > 1 ? rig.users[1].first_name : ""}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       ) : (
         <div></div>
       )}

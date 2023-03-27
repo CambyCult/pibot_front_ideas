@@ -74,6 +74,7 @@ function Field() {
   useEffect(handleChecklist, []);
 
   //Tabulator
+
   const columns = [
     { title: "Item", field: "item", width: 300, responsive: 0 },
     {
@@ -82,8 +83,8 @@ function Field() {
       editor: "tickCross",
       editable: true,
       editorParams: {
-        trueValue: "yes",
-        falseValue: "no",
+        trueValue: true,
+        falseValue: false,
         tristate: false,
         elementAttributes: {
           maxlength: "10", //set the maximum character length of the input element to 10 characters

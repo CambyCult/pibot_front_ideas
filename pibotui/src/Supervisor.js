@@ -80,7 +80,8 @@ export function SupervisorView() {
       .patch(`http://localhost:3000/users/${selectUser}.json`, params)
       .then((response) => {
         console.log(response.data);
-        setIsUsersVisible(false);
+        // setIsUsersVisible(false);
+        window.location.href = "/supervisor";
       })
       .catch((error) => {
         console.log(error.response.data.errors);
@@ -126,7 +127,11 @@ export function SupervisorView() {
             <label>Tech:</label>
             <select id="id" name="id" size="8">
               {usersInfo.map((container) => (
-                <option value={container.id} onClick={selectedUser}>
+                <option
+                  value={container.id}
+                  onClick={selectedUser}
+                  key={container.id}
+                >
                   {container.firstName}
                 </option>
               ))}
@@ -154,7 +159,7 @@ export function SupervisorView() {
               </thead>
               <tbody>
                 {rigs.map((rig) => (
-                  <tr>
+                  <tr key={rig.id}>
                     <td>{rig.id}</td>
                     <td>
                       {rig.users.length >= 1 ? rig.users[0].first_name : ""}

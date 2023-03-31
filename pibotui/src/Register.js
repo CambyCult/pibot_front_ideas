@@ -6,6 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./field.css";
+import "./Register.css";
 import { Modal } from "./Modal";
 import { Login } from "./Login";
 
@@ -100,7 +101,7 @@ const Register = () => {
         {errMsg}
       </p>
       <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} class="form-container">
         <label htmlFor="username">
           Username:
           <span className={validName ? "valid" : "hide"}>

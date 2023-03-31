@@ -101,12 +101,19 @@ export function SupervisorView() {
         <div className="messages-container">
           {messages.map((message) => (
             <div key={message.id} className="message">
-              <h5>date: {message.date}</h5>
-              <h6>shift: {message.shift}</h6>
-              <h6>
-                field tech: {message.user_first} {message.user_last}{" "}
-              </h6>
-              <h5>message: {message.content}</h5>
+              <p>
+                <span className="bold">date:</span> {message.date}
+              </p>
+              <p>
+                <span className="bold">shift:</span> {message.shift}
+              </p>
+              <p>
+                <span className="bold">field tech: </span>
+                {message.user_first} {message.user_last}{" "}
+              </p>
+              <p>
+                <span className="bold">message:</span> {message.content}
+              </p>
             </div>
           ))}
         </div>

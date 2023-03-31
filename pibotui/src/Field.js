@@ -4,6 +4,7 @@ import { ReactTabulator } from "react-tabulator";
 import "./field.css";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import { Modal } from "./Modal";
 
 function Field() {
   const jwt = localStorage.getItem("jwt");
@@ -24,8 +25,12 @@ function Field() {
 
   //toggles Message draft area
   const [isInputVisible, setIsInputVisible] = useState(false);
-  const handleMessages = () => {
-    setIsInputVisible(!isInputVisible);
+
+  const showMessages = () => {
+    setIsInputVisible(true);
+  };
+  const hideMessages = () => {
+    setIsInputVisible(false);
   };
 
   //Submits data for Message
@@ -149,10 +154,43 @@ function Field() {
           <button type="button" onClick={handleChecklist}>
             Reset Rig {userRig} Checklist
           </button>
-          <button type="button" onClick={handleMessages}>
+          <button type="button" onClick={showMessages}>
             Send A Message
           </button>
-          {isInputVisible ? (
+          <Modal show={isInputVisible} onClose={hideMessages}>
+            <form onSubmit={handleSubmit}>
+              <input
+                type="hidden"
+                name="user_id"
+                defaultValue={decoded.user_id}
+              ></input>
+              <input
+                type="hidden"
+                name="date"
+                defaultValue={currentDateTime}
+              ></input>
+              <div>Shift:</div>
+              <div className="flex-shifts">
+                <div>
+                  <input type="radio" name="shift" value="first"></input>
+                  <label>First</label>
+                </div>
+                <div>
+                  <input type="radio" name="shift" value="second"></input>
+                  <label>Second</label>
+                </div>
+              </div>
+              <div>Message:</div>
+              <textarea
+                type="textarea"
+                cols="25"
+                rows="5"
+                name="content"
+              ></textarea>
+              <button type="submit">Submit</button>
+            </form>
+          </Modal>
+          {/* {isInputVisible ? (
             <form onSubmit={handleSubmit}>
               <input
                 type="hidden"
@@ -190,7 +228,7 @@ function Field() {
             </form>
           ) : (
             <></>
-          )}
+          )} */}
         </div>
         <div className="bottom-Bar">Field Tech Portal</div>
       </header>

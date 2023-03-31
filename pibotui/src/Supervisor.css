@@ -45,6 +45,16 @@ td {
   color: #444;
 }
 
+.messages-container p {
+  font-size: medium;
+  text-align: left;
+}
+
 .message {
   border-bottom: 1px solid #444;
+}
+
+.bold {
+  font-weight: bolder;
+  font-size: large;
 }

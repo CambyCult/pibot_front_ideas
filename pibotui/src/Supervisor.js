@@ -92,8 +92,8 @@ export function SupervisorView() {
   };
 
   return (
-    <div>
-      <h2>Welcome to the supervisor portal.</h2>
+    <div className="wrapper">
+      <h2 className="welcome">Welcome to the supervisor portal.</h2>
       <button type="button" onClick={() => showMessages()}>
         Open Messages
       </button>
@@ -118,94 +118,60 @@ export function SupervisorView() {
           ))}
         </div>
       </Modal>
-      {/* {!isMessagesVisible ? (
-        <button type="button" onClick={() => handleVisibleMessages()}>
-          Open Messages
-        </button>
-      ) : (
-        <button type="button" onClick={() => handleVisibleMessages()}>
-          Close Messages
-        </button>
-      )}
-      {!isMessagesVisible ? (
-        <></>
-      ) : (
-        <div className="messages-container">
-          {messages.map((message) => (
-            <div key={message.id}>
-              <h3>date: {message.date}</h3>
-              <h4>shift: {message.shift}</h4>
-              <h4>
-                field tech: {message.user_first} {message.user_last}{" "}
-              </h4>
-              <h5>message: {message.content}</h5>
-            </div>
-          ))}
-        </div>
-      )} */}
-      <div></div>
-      {/* <button type="button" onClick={handleTechs}>
-        Assign Techs
-      </button> */}
-      {isUsersVisible ? (
-        <div className="flexTechs">
-          <form className="assign-form" onSubmit={handleFieldAssign}>
-            <label>Tech:</label>
-            <select id="id" name="id" size="8">
-              {usersInfo.map((container) => (
-                <option
-                  value={container.id}
-                  onClick={selectedUser}
-                  key={container.id}
-                >
-                  {container.firstName}
-                </option>
-              ))}
-            </select>
-            <label>Rig:</label>
-            <select id="rig_id" name="rig_id" size="6">
-              <option value="1">Rig 1</option>
-              <option value="2">Rig 2</option>
-              <option value="3">Rig 3</option>
-              <option value="4">Rig 4</option>
-              <option value="5">Rig 5</option>
-              <option value="6">Rig 6</option>
-              <option value={null}>Unassign</option>
-            </select>
 
-            <button className="rig-button" type="submit">
-              Submit
-            </button>
-          </form>
-          <div className="assignments-container">
-            <h3>Current Assignments</h3>
-            <table className="assignments-table">
-              <thead>
-                <tr>
-                  <th>Rig</th>
-                  <th>Tech 1</th>
-                  <th>Tech 2</th>
+      <div className="flexTechs">
+        <form className="assign-form" onSubmit={handleFieldAssign}>
+          <label>Tech:</label>
+          <select id="id" name="id" size="8">
+            {usersInfo.map((container) => (
+              <option
+                value={container.id}
+                onClick={selectedUser}
+                key={container.id}
+              >
+                {container.firstName}
+              </option>
+            ))}
+          </select>
+          <label>Rig:</label>
+          <select id="rig_id" name="rig_id" size="6">
+            <option value="1">Rig 1</option>
+            <option value="2">Rig 2</option>
+            <option value="3">Rig 3</option>
+            <option value="4">Rig 4</option>
+            <option value="5">Rig 5</option>
+            <option value="6">Rig 6</option>
+            <option value={null}>Unassign</option>
+          </select>
+
+          <button className="rig-button" type="submit">
+            Submit
+          </button>
+        </form>
+        <div className="assignments-container">
+          <h3>Current Assignments</h3>
+          <table className="assignments-table">
+            <thead>
+              <tr>
+                <th>Rig</th>
+                <th>Tech 1</th>
+                <th>Tech 2</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rigs.map((rig) => (
+                <tr key={rig.id}>
+                  <td>{rig.id}</td>
+                  <td>
+                    {rig.users.length >= 1 ? rig.users[0].first_name : ""}
+                  </td>
+                  <td>{rig.users.length > 1 ? rig.users[1].first_name : ""}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {rigs.map((rig) => (
-                  <tr key={rig.id}>
-                    <td>{rig.id}</td>
-                    <td>
-                      {rig.users.length >= 1 ? rig.users[0].first_name : ""}
-                    </td>
-                    <td>
-                      {rig.users.length > 1 ? rig.users[1].first_name : ""}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
-      ) : (
-        <div></div>
-      )}
+      </div>
     </div>
   );
 }

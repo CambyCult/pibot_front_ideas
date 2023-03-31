@@ -91,7 +91,7 @@ const Register = () => {
   };
 
   return (
-    <section>
+    <section className="main-container">
       <p
         ref={errRef}
         className={errMsg ? "errmsg" : "offscreen"}
@@ -219,10 +219,6 @@ const Register = () => {
           <button type="button" onClick={handleModal}>
             Sign In
           </button>
-          {/*put router link here*/}
-          {/* <Link to="/login" onClick={onLogin}>
-            Sign In
-          </Link> */}
         </span>
       </p>
       <Modal show={isModalVisible} onClose={onHideModal}>

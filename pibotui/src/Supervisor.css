@@ -3,6 +3,27 @@
   display: flex;
 }
 
+.assign-form {
+  background: #444;
+  color: #fff;
+  border: 2px solid #444;
+}
+
+.assign-form select {
+  background: blue;
+  color: #fff;
+  width: 85%;
+  margin: auto;
+}
+
+.rig-button {
+  background: #888;
+  color: #fff;
+  box-shadow: -2px 5px 5px -2px blue;
+  width: 95%;
+  margin: 1.3rem auto 0 auto;
+}
+
 .assignments-container {
   color: #fff;
   background: #444;
@@ -18,4 +39,12 @@ table {
 td {
   padding: 0.3rem 1rem;
   background-color: blue;
+}
+
+.messages-container {
+  color: #444;
+}
+
+.message {
+  border-bottom: 1px solid #444;
 }

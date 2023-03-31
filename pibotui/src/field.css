@@ -49,6 +49,13 @@
     left:0;
     bottom:0;
   }
+
+  .flex-shifts{
+    margin-right: 1.4rem;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 1.2rem;
+  }
   
   .container{
     display:flex;
@@ -69,3 +76,4 @@
               .tabulator-row-even{
                 background:blue;
               }
+        

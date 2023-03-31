@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import "./Supervisor.css";
+import { Modal } from "./Modal";
 
 export function SupervisorView() {
   const [messages, setMessages] = useState([]);
@@ -17,9 +18,13 @@ export function SupervisorView() {
   // renders messages on page load
   useEffect(handleMessages, []);
 
-  //toggles messages to be visible or not
-  const handleVisibleMessages = () => {
-    setIsMessagesVisible(!isMessagesVisible);
+  //opens modal with messages
+  const showMessages = () => {
+    setIsMessagesVisible(true);
+  };
+
+  const hideMessages = () => {
+    setIsMessagesVisible(false);
   };
 
   //USERS
@@ -45,13 +50,12 @@ export function SupervisorView() {
     container.rigId = user.rig_id;
     return container;
   });
-  // console.log(usersInfo);
 
   // Acquire Rigs
   const [rigs, setRigs] = useState([]);
   const handleRigs = () => {
     axios.get("http://localhost:3000/rigs.json").then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       setRigs(response.data);
     });
   };
@@ -60,11 +64,12 @@ export function SupervisorView() {
   // Placing User on Rig
 
   const [selectUser, setSelectUser] = useState("");
-  const [isUsersVisible, setIsUsersVisible] = useState(false);
+  // const [isUsersVisible, setIsUsersVisible] = useState(false);
+  const [isUsersVisible, setIsUsersVisible] = useState(true);
 
-  const handleTechs = () => {
-    setIsUsersVisible(!isUsersVisible);
-  };
+  // const handleTechs = () => {
+  //   setIsUsersVisible(!isUsersVisible);
+  // };
 
   //retrieves user_id for user clicked in form below to dynamically send patch request to that user on the backend
   const selectedUser = (event) => {
@@ -74,12 +79,10 @@ export function SupervisorView() {
   const handleFieldAssign = (event) => {
     event.preventDefault();
     const params = new FormData(event.target);
-    console.log(event.target);
-
+    // let chosenRig = params.get("rig_id");
     axios
       .patch(`http://localhost:3000/users/${selectUser}.json`, params)
       .then((response) => {
-        console.log(response.data);
         // setIsUsersVisible(false);
         window.location.href = "/supervisor";
       })
@@ -87,12 +90,28 @@ export function SupervisorView() {
         console.log(error.response.data.errors);
       });
   };
-  console.log();
+
   return (
     <div>
       <h2>Welcome to the supervisor portal.</h2>
-
-      {!isMessagesVisible ? (
+      <button type="button" onClick={() => showMessages()}>
+        Open Messages
+      </button>
+      <Modal show={isMessagesVisible} onClose={hideMessages}>
+        <div className="messages-container">
+          {messages.map((message) => (
+            <div key={message.id} className="message">
+              <h5>date: {message.date}</h5>
+              <h6>shift: {message.shift}</h6>
+              <h6>
+                field tech: {message.user_first} {message.user_last}{" "}
+              </h6>
+              <h5>message: {message.content}</h5>
+            </div>
+          ))}
+        </div>
+      </Modal>
+      {/* {!isMessagesVisible ? (
         <button type="button" onClick={() => handleVisibleMessages()}>
           Open Messages
         </button>
@@ -116,14 +135,14 @@ export function SupervisorView() {
             </div>
           ))}
         </div>
-      )}
+      )} */}
       <div></div>
-      <button type="button" onClick={handleTechs}>
+      {/* <button type="button" onClick={handleTechs}>
         Assign Techs
-      </button>
+      </button> */}
       {isUsersVisible ? (
         <div className="flexTechs">
-          <form onSubmit={handleFieldAssign}>
+          <form className="assign-form" onSubmit={handleFieldAssign}>
             <label>Tech:</label>
             <select id="id" name="id" size="8">
               {usersInfo.map((container) => (
@@ -144,8 +163,12 @@ export function SupervisorView() {
               <option value="4">Rig 4</option>
               <option value="5">Rig 5</option>
               <option value="6">Rig 6</option>
+              <option value={null}>Unassign</option>
             </select>
-            <button type="submit">Submit</button>
+
+            <button className="rig-button" type="submit">
+              Submit
+            </button>
           </form>
           <div className="assignments-container">
             <h3>Current Assignments</h3>

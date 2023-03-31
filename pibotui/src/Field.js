@@ -131,7 +131,7 @@ function Field() {
 
   return (
     <div className="App">
-      <h4>Welcome, {username}</h4>
+      <h4>Welcome, {username.toUpperCase()}</h4>
       <header className="App-header">
         <div className="container">
           <ReactTabulator
@@ -147,7 +147,7 @@ function Field() {
         </div>
         <div className="container2">
           <button type="button" onClick={handleChecklist}>
-            Load Rig {userRig} Checklist
+            Reset Rig {userRig} Checklist
           </button>
           <button type="button" onClick={handleMessages}>
             Send A Message
@@ -165,19 +165,20 @@ function Field() {
                 defaultValue={currentDateTime}
               ></input>
               <div>Shift:</div>
-
-              <label>
-                First
-                <input type="radio" name="shift" value="first"></input>
-              </label>
-              <label>
-                Second
-                <input type="radio" name="shift" value="second"></input>
-              </label>
-              <label>
-                Third
-                <input type="radio" name="shift" value="third"></input>
-              </label>
+              <div className="flex-shifts">
+                <label>
+                  First
+                  <input type="radio" name="shift" value="first"></input>
+                </label>
+                <label>
+                  Second
+                  <input type="radio" name="shift" value="second"></input>
+                </label>
+                <label>
+                  Third
+                  <input type="radio" name="shift" value="third"></input>
+                </label>
+              </div>
               <div>Message:</div>
               <textarea
                 type="textarea"
@@ -191,7 +192,7 @@ function Field() {
             <></>
           )}
         </div>
-        <div className="bottom-Bar">test</div>
+        <div className="bottom-Bar">Field Tech Portal</div>
       </header>
     </div>
   );

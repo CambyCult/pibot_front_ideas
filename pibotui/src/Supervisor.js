@@ -64,12 +64,8 @@ export function SupervisorView() {
   // Placing User on Rig
 
   const [selectUser, setSelectUser] = useState("");
-  // const [isUsersVisible, setIsUsersVisible] = useState(false);
-  const [isUsersVisible, setIsUsersVisible] = useState(true);
 
-  // const handleTechs = () => {
-  //   setIsUsersVisible(!isUsersVisible);
-  // };
+  const [isUsersVisible, setIsUsersVisible] = useState(true);
 
   //retrieves user_id for user clicked in form below to dynamically send patch request to that user on the backend
   const selectedUser = (event) => {
@@ -79,7 +75,7 @@ export function SupervisorView() {
   const handleFieldAssign = (event) => {
     event.preventDefault();
     const params = new FormData(event.target);
-    // let chosenRig = params.get("rig_id");
+
     axios
       .patch(`http://localhost:3000/users/${selectUser}.json`, params)
       .then((response) => {

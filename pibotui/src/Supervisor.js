@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import "./Supervisor.css";
 import { Modal } from "./Modal";
+import { Link } from "react-router-dom";
 
 export function SupervisorView() {
   const [messages, setMessages] = useState([]);
@@ -90,6 +91,11 @@ export function SupervisorView() {
   return (
     <div className="wrapper">
       <h2 className="welcome">Welcome to the supervisor portal.</h2>
+      <button>
+        <Link to={"/items"} style={{ textDecoration: "none", color: "black" }}>
+          Inventory Items
+        </Link>
+      </button>
       <button type="button" onClick={() => showMessages()}>
         Open Messages
       </button>

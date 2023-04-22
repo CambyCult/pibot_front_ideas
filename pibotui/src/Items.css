@@ -1,0 +1,16 @@
+.main {
+  width: 100vw;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+table th {
+  padding-left: 2rem;
+}
+
+table tr {
+  height: 3rem;
+}

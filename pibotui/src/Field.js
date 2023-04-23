@@ -77,19 +77,19 @@ function Field() {
   };
   useEffect(handleChecklist, []);
 
-  // Retrieving booleanChecklist for this Rig/User
+  //Retrieving booleanChecklist for this Rig/User
 
-  // const [booleanChecklist, setBooleanChecklist] = useState({});
-  // const handleChecklist = () => {
-  //   setBooleanChecklist("");
-  //   axios
-  //     .get(`http://localhost:3000/boolean_checklists/${userRig}.json`)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setBooleanChecklist({ ...response.data });
-  //     });
-  // };
-  // useEffect(handleChecklist, []);
+  const [booleanChecklist, setBooleanChecklist] = useState({});
+  const handleBooleanChecklist = () => {
+    setBooleanChecklist("");
+    axios
+      .get(`http://localhost:3000/boolean_checklists/${userRig}.json`)
+      .then((response) => {
+        console.log(response.data);
+        setBooleanChecklist({ ...response.data });
+      });
+  };
+  useEffect(handleBooleanChecklist, []);
 
   // Retrieving itemChecklist for this Rig/User
 
@@ -105,7 +105,7 @@ function Field() {
   // };
   // useEffect(handleItemChecklist, []);
 
-  //Tabulator
+  //Tabulator;
 
   // const columns = [
   //   { title: "Item", field: "item", width: 300, responsive: 0 },
@@ -146,72 +146,54 @@ function Field() {
   // ];
 
   // item tabulator
-  // const itemColumns = [
-  //   {
-  //     title: "Name",
-  //     field: "name",
-  //     editable: false,
-  //     editorParams: {
-  //       trueValue: true,
-  //       falseValue: false,
-  //       tristate: false,
-  //       elementAttributes: {
-  //         maxlength: "10", //set the maximum character length of the input element to 10 characters
-  //       },
-  //     },
-  //     widthGrow: 1,
-  //     responsive: 0,
-  //   },
-  //   {
-  //     title: "Minimum",
-  //     field: "minimum",
-  //     editable: false,
-  //     editorParams: {
-  //       trueValue: true,
-  //       falseValue: false,
-  //       tristate: false,
-  //       elementAttributes: {
-  //         maxlength: "10", //set the maximum character length of the input element to 10 characters
-  //       },
-  //     },
-  //     widthGrow: 1,
-  //     responsive: 0,
-  //   },
-  //   {
-  //     title: "Actual",
-  //     field: "actual",
-  //     editable: true,
-  //     editor: "number",
-  //     editorParams: {
-  //       elementAttributes: {
-  //         maxlength: "3", //set the maximum character length of the input element to 10 characters
-  //       },
-  //     },
-  //     widthGrow: 1,
-  //     responsive: 0,
-  //   },
-  // ];
+  const itemColumns = [
+    {
+      title: "Item",
+      field: "item",
+      editable: false,
+      editorParams: {
+        trueValue: true,
+        falseValue: false,
+        tristate: false,
+        elementAttributes: {
+          maxlength: "10", //set the maximum character length of the input element to 10 characters
+        },
+      },
+      widthGrow: 1,
+      responsive: 0,
+    },
+    {
+      title: "Minimum",
+      field: "minimum",
+      editable: false,
+      editorParams: {
+        trueValue: true,
+        falseValue: false,
+        tristate: false,
+        elementAttributes: {
+          maxlength: "10", //set the maximum character length of the input element to 10 characters
+        },
+      },
+      widthGrow: 1,
+      responsive: 0,
+    },
+    {
+      title: "Actual",
+      field: "actual_count",
+      editable: true,
+      editor: "number",
+      editorParams: {
+        elementAttributes: {
+          maxlength: "3", //set the maximum character length of the input element to 10 characters
+        },
+      },
+      widthGrow: 1,
+      responsive: 0,
+    },
+  ];
 
-  // var itemData = [
-  //   {
-  //     id: 1,
-  //     name: `${Object.keys(itemChecklist)[1]}`,
-  //     minimum: `${Object.values(itemChecklist)[1]}`,
-  //     actual: `${Object.values(itemChecklist)[2]}`,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: `${Object.keys(itemChecklist)[3]}`,
-  //     minimum: `${Object.values(itemChecklist)[3]}`,
-  //     actual: `${Object.values(itemChecklist)[4]}`,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: `${Object.keys(itemChecklist)[5]}`,
-  //     minimum: `${Object.values(itemChecklist)[5]}`,
-  //     actual: `${Object.values(itemChecklist)[6]}`,
-  //   },
-  // ];
+  let itemData;
+
   return (
     <div className="App">
       <h4 className="welcome">Welcome, {username.toUpperCase()}</h4>
@@ -226,7 +208,7 @@ function Field() {
             layoutColumnsOnNewData={"true"}
             responsiveLayout={"collapse"}
             textDirection={"rtl"}
-          />
+          /> */}
           <ReactTabulator
             maxheight={"100%"}
             maxwidth={"75%"}
@@ -236,7 +218,7 @@ function Field() {
             layoutColumnsOnNewData={"true"}
             responsiveLayout={"collapse"}
             textDirection={"rtl"}
-          /> */}
+          />
         </div>
         <div className="container2">
           <button type="button" onClick={handleChecklist}>

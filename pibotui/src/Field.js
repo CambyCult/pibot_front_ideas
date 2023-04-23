@@ -191,8 +191,13 @@ function Field() {
       responsive: 0,
     },
   ];
+  let array = [];
 
-  let itemData;
+  Object.entries(rigChecklist).map((item) => {
+    array.push(item[1]);
+    return item;
+  });
+  let itemData = array;
 
   return (
     <div className="App">

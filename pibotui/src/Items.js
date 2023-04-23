@@ -18,10 +18,11 @@ export function Items() {
       const newItem = response.data;
       setItems([...items, newItem]);
       event.target.reset();
+      handleItems();
     });
   };
 
-  useEffect(handleItems, [...items]);
+  useEffect(handleItems, []);
 
   return (
     <div className="main">

@@ -3,18 +3,40 @@ import { useState, useEffect } from "react";
 import "./Checklists.css";
 
 export function Checklists() {
+  const [items, setItems] = useState([]);
+  const handleItems = () => {
+    axios.get("http://localhost:3000/items.json").then((response) => {
+      setItems(response.data);
+      console.log(response.data);
+    });
+  };
+  useEffect(handleItems, []);
+
   const [manifests, setManifests] = useState([]);
 
   const handleManifests = () => {
     axios.get("http://localhost:3000/manifests.json").then((response) => {
       setManifests(response.data);
-      console.log(response.data);
     });
   };
 
   useEffect(handleManifests, []);
 
   const [searchFilter, setSearchFilter] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const params = new FormData(event.target);
+    axios
+      .post("http://localhost:3000/manifests.json", params)
+      .then((response) => {
+        console.log(response.data);
+        handleManifests();
+      })
+      .catch((error) => {
+        console.log(error.response.data.errors);
+      });
+  };
 
   return (
     <div>
@@ -31,24 +53,47 @@ export function Checklists() {
           <option key={manifest.id}>{manifest.rig_checklist_id}</option>
         ))}
       </datalist>
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Minimum</th>
-          </tr>
-        </thead>
-        <tbody>
-          {manifests
-            .filter((manifest) => manifest.rig_checklist_id == searchFilter)
-            .map((manifest) => (
-              <tr key={manifest.id}>
-                <td>{manifest.item_name}</td>
-                <td>{manifest.item_minimum}</td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <div className="flex_container">
+        <div className="add_item">
+          <form onSubmit={handleSubmit}>
+            <label>Add Item to Checklist:</label>
+            {/* <select id="item" name="id">
+              {items.map((item) => (
+                <option key={item.id} name="item_id">
+                  {item.name}
+                </option>
+              ))}
+            </select> */}
+            <label>Item Id</label>
+            <input type="number" name="item_id"></input>
+            <label>Rig:</label>
+            <input
+              type="number"
+              value={searchFilter}
+              name="rig_checklist_id"
+            ></input>
+            <button type="submit">add to list</button>
+          </form>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Minimum</th>
+            </tr>
+          </thead>
+          <tbody>
+            {manifests
+              .filter((manifest) => manifest.rig_checklist_id == searchFilter)
+              .map((manifest) => (
+                <tr key={manifest.id}>
+                  <td>{manifest.item_name}</td>
+                  <td>{manifest.item_minimum}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

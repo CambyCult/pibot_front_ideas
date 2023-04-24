@@ -38,6 +38,19 @@ export function Checklists() {
       });
   };
 
+  const [selectedItem, setSelectedItem] = useState("");
+
+  const itemId = (event) => {
+    let chosenId;
+    const chosenItem = event.target.value;
+    for (let item of items) {
+      if (item.name === chosenItem) {
+        chosenId = item.id;
+      }
+    }
+    console.log(chosenId);
+    setSelectedItem(chosenId);
+  };
   return (
     <div>
       <h6>View/Add Current Rig Items: </h6>
@@ -57,20 +70,26 @@ export function Checklists() {
         <div className="add_item">
           <form onSubmit={handleSubmit}>
             <label>Add Item to Checklist:</label>
-            {/* <select id="item" name="id">
+            <select id="item" name="id" onChange={itemId}>
               {items.map((item) => (
                 <option key={item.id} name="item_id">
                   {item.name}
                 </option>
               ))}
-            </select> */}
-            <label>Item Id</label>
-            <input type="number" name="item_id"></input>
-            <label>Rig:</label>
+            </select>
+            <label hidden>Item Id</label>
+            <input
+              type="number"
+              name="item_id"
+              value={selectedItem}
+              hidden
+            ></input>
+            <label hidden>Rig:</label>
             <input
               type="number"
               value={searchFilter}
               name="rig_checklist_id"
+              hidden
             ></input>
             <button type="submit">add to list</button>
           </form>

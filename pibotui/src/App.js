@@ -6,6 +6,7 @@ import "./field.css";
 import { Protected } from "./Protected";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Items } from "./Items";
+import { Checklists } from "./Checklists";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           />
           <Route path="/supervisor" element={<SupervisorView />} />
           <Route path="/items" element={<Items />} />
+          <Route path="/checklists" element={<Checklists />} />
         </Routes>
       </BrowserRouter>
     </main>

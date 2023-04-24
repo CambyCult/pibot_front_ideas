@@ -99,6 +99,14 @@ export function SupervisorView() {
       <button type="button" onClick={() => showMessages()}>
         Open Messages
       </button>
+      <button>
+        <Link
+          to={"/checklists"}
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          View/Edit Checklists
+        </Link>
+      </button>
       <Modal show={isMessagesVisible} onClose={hideMessages}>
         <div className="messages-container">
           {messages.map((message) => (
